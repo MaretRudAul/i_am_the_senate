@@ -1,0 +1,2456 @@
+namespace = I_am_the_Senate
+
+country_event = {
+	id = I_am_the_Senate.1
+	title = "I_am_the_Senate.1.name"
+	desc = "I_am_the_Senate.1.desc"
+	picture = "GFX_evt_palpatine"
+	is_triggered_only = yes
+	show_sound = event_screams
+	
+	immediate = {
+		# this event should only affect the scope of the president, and here we are saving that scope.
+		save_event_target_as = president
+		# this goes to every country, then every country in the federation, then checks if this country is overlord to the previous country. If so it gives the subject (previous country) the unification flag.
+		every_country = {
+			every_country = {
+				limit = {
+					is_in_federation_with = event_target:president
+				}
+				if = {
+					limit = { is_overlord_to = prev }
+					prev = {
+						set_country_flag = to_be_unified
+					}
+				}
+			}
+		}
+		# this gives the unification flag to all the other members in the federation.
+		every_country = {
+			limit = {
+				is_federation_leader = no
+				is_in_federation_with = event_target:president
+			}
+			set_country_flag = to_be_unified
+		}
+		random_owned_pop_species = {
+			# if = {
+				# limit = {species = {is_majority_species = yes}}
+				save_event_target_as = rebel_species
+			# }
+		}
+	}
+	# the option for unifying the federation
+	option = {
+		name = conquest_of_the_federation_unification_desc
+		hidden_effect = {
+			every_country = {
+				limit = {
+					NOT = {is_same_value = event_target:president}
+				}
+				country_event = {id = I_am_the_Senate.2}
+			}
+			country_event = {id = I_am_the_Senate.40 days = 1}
+			event_target:president = {
+			}
+		}
+		ai_chance = {
+			factor = 80
+		}
+	}
+	# the option for vassalizing the federation
+	option = {
+		name = conquest_of_the_federation_subjectization_desc
+		hidden_effect = {
+			every_country = {
+				limit = {
+					NOT = {is_same_value = event_target:president}
+				}
+				country_event = {id = I_am_the_Senate.3}
+			}
+			country_event = {id = I_am_the_Senate.41 days = 1}
+			event_target:president = {
+			}
+		}
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				has_authority = auth_corporate
+			}
+			modifier = {
+				factor = -16
+				any_country = {
+					AND = {
+						has_country_flag = to_be_unified
+						relative_power = {
+							who = event_target:president
+							category = fleet
+							value > equivalent
+						}
+					}
+				}
+			}
+		}
+	}
+	after = {}
+}
+
+country_event = {
+	id = I_am_the_Senate.2
+	title = "I_am_the_Senate.1.name"
+	desc = "I_am_the_Senate.23.desc"
+	picture = "GFX_evt_palpatine"
+	is_triggered_only = yes
+	show_sound = event_screams
+	
+	immediate = {}
+	option = {
+		name = surrender_Senate_desc
+		trigger = {
+			has_country_flag = to_be_unified
+		}
+		hidden_effect = {
+			SLEX_get_custom_parameter_advanced = {
+				CONDITION_NAME = has_resource
+				FIRST_KW = type
+				SECOND_KW = energy
+				THIRD_KW = amount
+				VARIABLE = energy_var
+				ROUNDING_ZEROES = 00
+			}
+			event_target:president = {
+				set_variable = { which = energy_var value = prev }
+			while = {
+				limit = { check_variable = { which = energy_var value >= 1000 } }
+				add_resource = { energy = 1000 }
+				change_variable = { which = energy_var value = -1000 }
+			}
+			while = {
+				limit = { check_variable = { which = energy_var value >= 100 } }
+				add_resource = { energy = 100 }
+				change_variable = { which = energy_var value = -100 }
+			}
+			while = {
+				limit = { check_variable = { which = energy_var value >= 10 } }
+				add_resource = { energy = 10 }
+				change_variable = { which = energy_var value = -10 }
+			}
+			while = {
+				limit = { check_variable = { which = energy_var value >= 1 } }
+				add_resource = { energy = 1 }
+				change_variable = { which = energy_var value = -1 }
+			}
+			}
+			SLEX_get_custom_parameter_advanced = {
+				CONDITION_NAME = has_resource
+				FIRST_KW = type
+				SECOND_KW = minerals
+				THIRD_KW = amount
+				VARIABLE = minerals_var
+				ROUNDING_ZEROES = 00
+			}
+			event_target:president = {
+				set_variable = { which = minerals_var value = prev }
+			while = {
+				limit = { check_variable = { which = minerals_var value >= 1000 } }
+				add_resource = { minerals = 1000 }
+				change_variable = { which = minerals_var value = -1000 }
+			}
+			while = {
+				limit = { check_variable = { which = minerals_var value >= 100 } }
+				add_resource = { minerals = 100 }
+				change_variable = { which = minerals_var value = -100 }
+			}
+			while = {
+				limit = { check_variable = { which = minerals_var value >= 10 } }
+				add_resource = { minerals = 10 }
+				change_variable = { which = minerals_var value = -10 }
+			}
+			while = {
+				limit = { check_variable = { which = minerals_var value >= 1 } }
+				add_resource = { minerals = 1 }
+				change_variable = { which = minerals_var value = -1 }
+			}
+			}
+			SLEX_get_custom_parameter_advanced = {
+				CONDITION_NAME = has_resource
+				FIRST_KW = type
+				SECOND_KW = food
+				THIRD_KW = amount
+				VARIABLE = food_var
+				ROUNDING_ZEROES = 00
+			}
+			event_target:president = {
+				set_variable = { which = food_var value = prev }
+			while = {
+				limit = { check_variable = { which = food_var value >= 1000 } }
+				add_resource = { food = 1000 }
+				change_variable = { which = food_var value = -1000 }
+			}
+			while = {
+				limit = { check_variable = { which = food_var value >= 100 } }
+				add_resource = { food = 100 }
+				change_variable = { which = food_var value = -100 }
+			}
+			while = {
+				limit = { check_variable = { which = food_var value >= 10 } }
+				add_resource = { food = 10 }
+				change_variable = { which = food_var value = -10 }
+			}
+			while = {
+				limit = { check_variable = { which = food_var value >= 1 } }
+				add_resource = { food = 1 }
+				change_variable = { which = food_var value = -1 }
+			}
+			}
+			SLEX_get_custom_parameter_advanced = {
+				CONDITION_NAME = has_resource
+				FIRST_KW = type
+				SECOND_KW = alloys
+				THIRD_KW = amount
+				VARIABLE = alloys_var
+				ROUNDING_ZEROES = 00
+			}
+			event_target:president = {
+				set_variable = { which = alloys_var value = prev }
+			while = {
+				limit = { check_variable = { which = alloys_var value >= 1000 } }
+				add_resource = { alloys = 1000 }
+				change_variable = { which = alloys_var value = -1000 }
+			}
+			while = {
+				limit = { check_variable = { which = alloys_var value >= 100 } }
+				add_resource = { alloys = 100 }
+				change_variable = { which = alloys_var value = -100 }
+			}
+			while = {
+				limit = { check_variable = { which = alloys_var value >= 10 } }
+				add_resource = { alloys = 10 }
+				change_variable = { which = alloys_var value = -10 }
+			}
+			while = {
+				limit = { check_variable = { which = alloys_var value >= 1 } }
+				add_resource = { alloys = 1 }
+				change_variable = { which = alloys_var value = -1 }
+			}
+			}
+			SLEX_get_custom_parameter_advanced = {
+				CONDITION_NAME = has_resource
+				FIRST_KW = type
+				SECOND_KW = consumer_goods
+				THIRD_KW = amount
+				VARIABLE = consumer_goods_var
+				ROUNDING_ZEROES = 00
+			}
+			event_target:president = {
+				set_variable = { which = consumer_goods_var value = prev }
+			while = {
+				limit = { check_variable = { which = consumer_goods_var value >= 1000 } }
+				add_resource = { consumer_goods = 1000 }
+				change_variable = { which = consumer_goods_var value = -1000 }
+			}
+			while = {
+				limit = { check_variable = { which = consumer_goods_var value >= 100 } }
+				add_resource = { consumer_goods = 100 }
+				change_variable = { which = consumer_goods_var value = -100 }
+			}
+			while = {
+				limit = { check_variable = { which = consumer_goods_var value >= 10 } }
+				add_resource = { consumer_goods = 10 }
+				change_variable = { which = consumer_goods_var value = -10 }
+			}
+			while = {
+				limit = { check_variable = { which = consumer_goods_var value >= 1 } }
+				add_resource = { consumer_goods = 1 }
+				change_variable = { which = consumer_goods_var value = -1 }
+			}
+			}
+			SLEX_get_custom_parameter_advanced = {
+				CONDITION_NAME = has_resource
+				FIRST_KW = type
+				SECOND_KW = influence
+				THIRD_KW = amount
+				VARIABLE = influence_var
+				ROUNDING_ZEROES = 0
+			}
+			event_target:president = {
+				set_variable = { which = influence_var value = prev }
+			while = {
+				limit = { check_variable = { which = influence_var value >= 1000 } }
+				add_resource = { influence = 1000 }
+				change_variable = { which = influence_var value = -1000 }
+			}
+			while = {
+				limit = { check_variable = { which = influence_var value >= 100 } }
+				add_resource = { influence = 100 }
+				change_variable = { which = influence_var value = -100 }
+			}
+			while = {
+				limit = { check_variable = { which = influence_var value >= 10 } }
+				add_resource = { influence = 10 }
+				change_variable = { which = influence_var value = -10 }
+			}
+			while = {
+				limit = { check_variable = { which = influence_var value >= 1 } }
+				add_resource = { influence = 1 }
+				change_variable = { which = influence_var value = -1 }
+			}
+			}
+			SLEX_get_custom_parameter_advanced = {
+				CONDITION_NAME = has_resource
+				FIRST_KW = type
+				SECOND_KW = volatile_motes
+				THIRD_KW = amount
+				VARIABLE = volatile_motes_var
+				ROUNDING_ZEROES = 00
+			}
+			event_target:president = {
+				set_variable = { which = volatile_motes_var value = prev }
+			while = {
+				limit = { check_variable = { which = volatile_motes_var value >= 1000 } }
+				add_resource = { volatile_motes = 1000 }
+				change_variable = { which = volatile_motes_var value = -1000 }
+			}
+			while = {
+				limit = { check_variable = { which = volatile_motes_var value >= 100 } }
+				add_resource = { volatile_motes = 100 }
+				change_variable = { which = volatile_motes_var value = -100 }
+			}
+			while = {
+				limit = { check_variable = { which = volatile_motes_var value >= 10 } }
+				add_resource = { volatile_motes = 10 }
+				change_variable = { which = volatile_motes_var value = -10 }
+			}
+			while = {
+				limit = { check_variable = { which = volatile_motes_var value >= 1 } }
+				add_resource = { volatile_motes = 1 }
+				change_variable = { which = volatile_motes_var value = -1 }
+			}
+			}
+			SLEX_get_custom_parameter_advanced = {
+				CONDITION_NAME = has_resource
+				FIRST_KW = type
+				SECOND_KW = exotic_gases
+				THIRD_KW = amount
+				VARIABLE = exotic_gases_var
+				ROUNDING_ZEROES = 00
+			}
+			event_target:president = {
+				set_variable = { which = exotic_gases_var value = prev }
+			while = {
+				limit = { check_variable = { which = exotic_gases_var value >= 1000 } }
+				add_resource = { exotic_gases = 1000 }
+				change_variable = { which = exotic_gases_var value = -1000 }
+			}
+			while = {
+				limit = { check_variable = { which = exotic_gases_var value >= 100 } }
+				add_resource = { exotic_gases = 100 }
+				change_variable = { which = exotic_gases_var value = -100 }
+			}
+			while = {
+				limit = { check_variable = { which = exotic_gases_var value >= 10 } }
+				add_resource = { exotic_gases = 10 }
+				change_variable = { which = exotic_gases_var value = -10 }
+			}
+			while = {
+				limit = { check_variable = { which = exotic_gases_var value >= 1 } }
+				add_resource = { exotic_gases = 1 }
+				change_variable = { which = exotic_gases_var value = -1 }
+			}
+			}
+			SLEX_get_custom_parameter_advanced = {
+				CONDITION_NAME = has_resource
+				FIRST_KW = type
+				SECOND_KW = rare_crystals
+				THIRD_KW = amount
+				VARIABLE = rare_crystals_var
+				ROUNDING_ZEROES = 00
+			}
+			event_target:president = {
+				set_variable = { which = rare_crystals_var value = prev }
+			while = {
+				limit = { check_variable = { which = rare_crystals_var value >= 1000 } }
+				add_resource = { rare_crystals = 1000 }
+				change_variable = { which = rare_crystals_var value = -1000 }
+			}
+			while = {
+				limit = { check_variable = { which = rare_crystals_var value >= 100 } }
+				add_resource = { rare_crystals = 100 }
+				change_variable = { which = rare_crystals_var value = -100 }
+			}
+			while = {
+				limit = { check_variable = { which = rare_crystals_var value >= 10 } }
+				add_resource = { rare_crystals = 10 }
+				change_variable = { which = rare_crystals_var value = -10 }
+			}
+			while = {
+				limit = { check_variable = { which = rare_crystals_var value >= 1 } }
+				add_resource = { rare_crystals = 1 }
+				change_variable = { which = rare_crystals_var value = -1 }
+			}
+			}
+			SLEX_get_custom_parameter_advanced = {
+				CONDITION_NAME = has_resource
+				FIRST_KW = type
+				SECOND_KW = sr_dark_matter
+				THIRD_KW = amount
+				VARIABLE = sr_dark_matter_var
+				ROUNDING_ZEROES = 00
+			}
+			event_target:president = {
+				set_variable = { which = sr_dark_matter_var value = prev }
+			while = {
+				limit = { check_variable = { which = sr_dark_matter_var value >= 1000 } }
+				add_resource = { sr_dark_matter = 1000 }
+				change_variable = { which = sr_dark_matter_var value = -1000 }
+			}
+			while = {
+				limit = { check_variable = { which = sr_dark_matter_var value >= 100 } }
+				add_resource = { sr_dark_matter = 100 }
+				change_variable = { which = sr_dark_matter_var value = -100 }
+			}
+			while = {
+				limit = { check_variable = { which = sr_dark_matter_var value >= 10 } }
+				add_resource = { sr_dark_matter = 10 }
+				change_variable = { which = sr_dark_matter_var value = -10 }
+			}
+			while = {
+				limit = { check_variable = { which = sr_dark_matter_var value >= 1 } }
+				add_resource = { sr_dark_matter = 1 }
+				change_variable = { which = sr_dark_matter_var value = -1 }
+			}
+			}
+			SLEX_get_custom_parameter_advanced = {
+				CONDITION_NAME = has_resource
+				FIRST_KW = type
+				SECOND_KW = sr_living_metal
+				THIRD_KW = amount
+				VARIABLE = sr_living_metal_var
+				ROUNDING_ZEROES = 00
+			}
+			event_target:president = {
+				set_variable = { which = sr_living_metal_var value = prev }
+			while = {
+				limit = { check_variable = { which = sr_living_metal_var value >= 1000 } }
+				add_resource = { sr_living_metal = 1000 }
+				change_variable = { which = sr_living_metal_var value = -1000 }
+			}
+			while = {
+				limit = { check_variable = { which = sr_living_metal_var value >= 100 } }
+				add_resource = { sr_living_metal = 100 }
+				change_variable = { which = sr_living_metal_var value = -100 }
+			}
+			while = {
+				limit = { check_variable = { which = sr_living_metal_var value >= 10 } }
+				add_resource = { sr_living_metal = 10 }
+				change_variable = { which = sr_living_metal_var value = -10 }
+			}
+			while = {
+				limit = { check_variable = { which = sr_living_metal_var value >= 1 } }
+				add_resource = { sr_living_metal = 1 }
+				change_variable = { which = sr_living_metal_var value = -1 }
+			}
+			}
+			SLEX_get_custom_parameter_advanced = {
+				CONDITION_NAME = has_resource
+				FIRST_KW = type
+				SECOND_KW = sr_zro
+				THIRD_KW = amount
+				VARIABLE = sr_zro_var
+				ROUNDING_ZEROES = 00
+			}
+			event_target:president = {
+				set_variable = { which = sr_zro_var value = prev }
+			while = {
+				limit = { check_variable = { which = sr_zro_var value >= 1000 } }
+				add_resource = { sr_zro = 1000 }
+				change_variable = { which = sr_zro_var value = -1000 }
+			}
+			while = {
+				limit = { check_variable = { which = sr_zro_var value >= 100 } }
+				add_resource = { sr_zro = 100 }
+				change_variable = { which = sr_zro_var value = -100 }
+			}
+			while = {
+				limit = { check_variable = { which = sr_zro_var value >= 10 } }
+				add_resource = { sr_zro = 10 }
+				change_variable = { which = sr_zro_var value = -10 }
+			}
+			while = {
+				limit = { check_variable = { which = sr_zro_var value >= 1 } }
+				add_resource = { sr_zro = 1 }
+				change_variable = { which = sr_zro_var value = -1 }
+			}
+			}
+			# determines the percent of planets that will become rebels. The lower the rebel_count the higher the rebels. Sounds counterintuitive.
+		
+		}
+	}
+	option = {
+		name = witness_to_surrender_desc
+		trigger = {
+			NOT = {has_country_flag = to_be_unified}
+		}
+	}
+	after = {}
+}
+
+country_event = {
+	id = I_am_the_Senate.3
+	title = "I_am_the_Senate.1.name"
+	desc = "I_am_the_Senate.23.desc"
+	picture = "GFX_evt_palpatine"
+	is_triggered_only = yes
+	show_sound = event_screams
+	
+	option = {
+		name = surrender_Senate_desc
+		trigger = {
+			has_country_flag = to_be_unified
+		}
+		hidden_effect = {}
+	}
+	option = {
+		name = witness_to_surrender_desc
+		trigger = {
+			NOT = {has_country_flag = to_be_unified}
+		}
+	}
+	after = {}
+}
+
+country_event = {
+	id = I_am_the_Senate.40
+	title = "I_am_the_Senate.1.name"
+	desc = "I_am_the_Senate.23.desc"
+	is_triggered_only = yes
+	hide_window = yes
+	immediate = {
+		create_country = {
+			name_list = random
+			species = event_target:rebel_species
+			type = default
+			authority = auth_imperial
+			civics = { }
+			origin = "prosperous_unification"
+			ethos = {}
+			ignore_initial_colony_error = yes
+		}
+		last_created_country = {
+			save_event_target_as = senate_rebels
+			copy_techs_from = { target = event_target:president}
+			set_country_flag = senate_rebels
+			set_name = "The Resistance"
+		}
+		every_country = {
+		limit = {has_country_flag = to_be_unified}
+		set_variable = {which = rebel_count value = 41}
+		if = {
+			limit = {
+				opinion = {
+					who = event_target:president
+					value > 100
+				}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+				opinion = {
+					who = event_target:president
+					value > 200
+				}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+				opinion = {
+					who = event_target:president
+					value > 300
+				}
+			}
+			change_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+				AND = {
+					event_target:president = {has_authority = auth_democratic}
+					has_authority = auth_democratic
+				}
+			}
+			change_variable = {which = rebel_count value = 15}
+		}
+		if = {
+			limit = {
+			OR = {
+				AND = {
+					event_target:president = {has_authority = auth_hive_mind}
+					has_authority = auth_hive_mind
+				}
+				AND = {
+					event_target:president = {has_authority = auth_machine_intelligence}
+					has_authority = auth_machine_intelligence
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 50}
+		}
+		if = {
+			limit = {
+				AND = {
+					event_target:president = {has_authority = auth_corporate}
+					has_authority = auth_corporate
+				}
+			}
+			change_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			OR = {
+				AND = {
+					event_target:president = {has_authority = auth_oligarchic}
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+				AND = {
+					event_target:president = {has_authority = auth_imperial}
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+				AND = {
+					event_target:president = {has_authority = auth_dictatorial}
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				has_ethic = ethic_authoritarian
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				OR = {
+					has_ethic = ethic_egalitarian
+					has_ethic = ethic_fanatic_xenophile
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_xenophobe
+						has_ethic = ethic_fanatic_xenophobe
+					}
+				}
+				AND = {
+					opinion = {
+						who = event_target:president
+						value > 150
+					}
+					has_ethic = ethic_xenophobe
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_xenophile
+						has_ethic = ethic_fanatic_xenophile
+					}
+				}
+				has_ethic = ethic_xenophile
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				has_ethic = ethic_militarist
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_xenophile
+					}
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_spiritualist
+						has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				has_ethic = ethic_spiritualist
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				has_ethic = ethic_materialist
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			OR = {
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_authoritarian
+							has_ethic = ethic_fanatic_authoritarian
+						}
+					}
+					has_ethic = ethic_fanatic_authoritarian
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_egalitarian
+							has_ethic = ethic_fanatic_egalitarian
+						}
+					}
+					has_ethic = ethic_fanatic_egalitarian
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_xenophile
+							has_ethic = ethic_fanatic_xenophile
+						}
+					}
+					has_ethic = ethic_fanatic_xenophile
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_militarist
+							has_ethic = ethic_fanatic_militarist
+						}
+					}
+					has_ethic = ethic_fanatic_militarist
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_pacifist
+							has_ethic = ethic_fanatic_pacifist
+						}
+					}
+					has_ethic = ethic_fanatic_pacifist
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_spiritualist
+							has_ethic = ethic_fanatic_spiritualist
+						}
+					}
+					has_ethic = ethic_fanatic_spiritualist
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_materialist
+							has_ethic = ethic_fanatic_materialist
+						}
+					}
+					has_ethic = ethic_fanatic_materialist
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			opinion = {
+				who = event_target:president
+				value < -100
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			opinion = {
+				who = event_target:president
+				value < -200
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			opinion = {
+				who = event_target:president
+				value < -300
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {has_authority = auth_democratic}
+				OR = {
+					has_authority = auth_oligarchic
+					has_authority = auth_imperial
+					has_authority = auth_dictatorial
+				}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 15}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {has_civic = civic_criminal_heritage}
+				NOT = {has_civic = civic_criminal_heritage}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {has_civic = civic_machine_assimilator}
+				NOT = {has_authority = auth_machine_intelligence}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {has_authority = auth_corporate}
+				OR = {
+					has_authority = auth_oligarchic
+					has_authority = auth_imperial
+					has_authority = auth_dictatorial
+					}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+				has_authority = auth_democratic
+			}
+			}
+			subtract_variable = {which = rebel_count value = 15}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_spiritualist
+						has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				has_ethic = ethic_materialist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+					has_ethic = ethic_spiritualist
+					has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				has_ethic = ethic_fanatic_materialist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				has_ethic = ethic_spiritualist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				has_ethic = ethic_fanatic_spiritualist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+				has_ethic = ethic_militarist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+				has_ethic = ethic_fanatic_militarist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				has_ethic = ethic_pacifist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				has_ethic = ethic_fanatic_pacifist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				has_ethic = ethic_egalitarian
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				has_ethic = ethic_fanatic_egalitarian
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				has_ethic = ethic_authoritarian
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				has_ethic = ethic_fanatic_authoritarian
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_xenophobe
+						has_ethic = ethic_fanatic_xenophobe
+					}
+				}
+				OR = {
+					has_ethic = ethic_fanatic_xenophile
+					has_ethic = ethic_egalitarian
+					has_ethic = ethic_fanatic_egalitarian
+				}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_xenophile
+						has_ethic = ethic_fanatic_xenophile
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				OR = {
+					has_ethic = ethic_xenophobe
+					has_ethic = ethic_fanatic_xenophobe
+				}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				is_federation_leader = yes
+				NOT = {has_ethic = ethic_xenophobe}
+				NOT = {has_ethic = ethic_fanatic_xenophobe}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		
+		event_target:senate_rebels = {
+		prev = {
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_xenophobe
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_xenophobe }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_xenophobe}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_xenophobe
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_xenophobe }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_xenophobe}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_militarist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_militarist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_militarist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_militarist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_militarist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_militarist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_pacifist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_pacifist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_pacifist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_pacifist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_pacifist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_pacifist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_xenophile
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_xenophile }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_xenophile}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_xenophile
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_xenophile }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_xenophile}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_authoritarian
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_authoritarian }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_authoritarian}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_authoritarian
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_authoritarian }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_authoritarian}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_egalitarian
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_egalitarian }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_egalitarian}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_egalitarian
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_egalitarian }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_egalitarian}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_materialist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_materialist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_materialist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_materialist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_materialist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_materialist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_spiritualist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_spiritualist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_spiritualist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_spiritualist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_spiritualist}}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_spiritualist}
+			}
+		}
+	}
+	random_system_within_border = {
+		limit = { 
+			any_system_planet = {is_colony = yes}
+		}
+		save_event_target_as = rebel_origin
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 81}
+				check_variable = {which = rebel_count value < 91}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.05
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 71}
+				check_variable = {which = rebel_count value < 81}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.10
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 61}
+				check_variable = {which = rebel_count value < 71}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.15
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 51}
+				check_variable = {which = rebel_count value < 61}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.20
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 41}
+				check_variable = {which = rebel_count value < 51}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.25
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 31}
+				check_variable = {which = rebel_count value < 41}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.35
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 21}
+				check_variable = {which = rebel_count value < 31}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.40
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value < 21}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.60
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	every_system_within_border = {
+		limit = {has_star_flag = rebel_system}
+		every_fleet_in_system = {
+			limit = { owner = { has_country_flag = to_be_unified } }
+			set_owner = event_target:senate_rebels
+		}
+		starbase = {
+			set_owner = event_target:senate_rebels
+		}
+	}
+	every_owned_planet = {
+		limit = { solar_system = {has_star_flag = rebel_system}}
+		set_owner = event_target:senate_rebels
+		set_controller = event_target:senate_rebels
+	}
+	every_pool_leader = {
+		set_owner = event_target:senate_rebels
+	}
+		event_target:senate_rebels = {
+			add_resource = { energy = 1000 }
+			add_resource = { minerals = 1000 }
+			add_resource = { food = 1000 }
+			add_resource = { consumer_goods = 1000 }
+			add_resource = { alloys = 1000 }
+		}
+	every_system_within_border = {
+		limit = {NOT = {has_star_flag = rebel_system}}
+		every_fleet_in_system = {
+			limit = { owner = { has_country_flag = to_be_unified } }
+			set_owner = event_target:president
+		}
+		starbase = {
+			set_owner = event_target:president
+		}
+	}
+	# commented out because it was filling up the error log and the code doesn't seem to go anything.
+	# Every_owned_ship = {
+		# set_owner = event_target:president
+	# }
+	every_owned_planet = {
+		set_owner = event_target:president
+		set_controller = event_target:president
+	}
+	Every_owned_leader = {
+		set_owner = event_target:president
+	}
+	Every_owned_army = {
+		set_owner = event_target:president
+	}
+	event_target:president = {
+		steal_relic = {
+			target = prev
+			relic = all
+		}
+	}
+	}
+	# every_country has ended here.
+	event_target:senate_rebels = {
+		add_opinion_modifier = { who = event_target:president modifier = opinion_traitor }
+	}
+	declare_war = {
+		target = event_target:senate_rebels
+		attacker_war_goal = wg_renegade_containment
+	}
+	}
+	after = {
+		every_country = {
+			limit = {has_country_flag = to_be_unified}
+			remove_country_flag = to_be_unified
+		}
+	}
+}
+country_event = {
+	id = I_am_the_Senate.41
+	title = "I_am_the_Senate.1.name"
+	desc = "I_am_the_Senate.23.desc"
+	is_triggered_only = yes
+	hide_window = yes
+	immediate = {
+		create_country = {
+			name_list = random
+			species = event_target:rebel_species
+			type = default
+			authority = auth_imperial
+			civics = { }
+			origin = "prosperous_unification"
+			ethos = {}
+			ignore_initial_colony_error = yes
+		}
+		last_created_country = {
+			save_event_target_as = senate_rebels
+			copy_techs_from = { target = event_target:president}
+			set_country_flag = senate_rebels
+			set_name = "The Resistance"
+		}
+		every_country = {
+			limit = {has_country_flag = to_be_unified}
+			set_variable = {which = rebel_count value = 41}
+		if = {
+			limit = {
+				opinion = {
+					who = event_target:president
+					value > 100
+				}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+				opinion = {
+					who = event_target:president
+					value > 200
+				}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+				opinion = {
+					who = event_target:president
+					value > 300
+				}
+			}
+			change_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+				AND = {
+					event_target:president = {has_authority = auth_democratic}
+					has_authority = auth_democratic
+				}
+			}
+			change_variable = {which = rebel_count value = 15}
+		}
+		if = {
+			limit = {
+			OR = {
+				AND = {
+					event_target:president = {has_authority = auth_hive_mind}
+					has_authority = auth_hive_mind
+				}
+				AND = {
+					event_target:president = {has_authority = auth_machine_intelligence}
+					has_authority = auth_machine_intelligence
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 50}
+		}
+		if = {
+			limit = {
+				AND = {
+					event_target:president = {has_authority = auth_corporate}
+					has_authority = auth_corporate
+				}
+			}
+			change_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			OR = {
+				AND = {
+					event_target:president = {has_authority = auth_oligarchic}
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+				AND = {
+					event_target:president = {has_authority = auth_imperial}
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+				AND = {
+					event_target:president = {has_authority = auth_dictatorial}
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				has_ethic = ethic_authoritarian
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				OR = {
+					has_ethic = ethic_egalitarian
+					has_ethic = ethic_fanatic_xenophile
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_xenophobe
+						has_ethic = ethic_fanatic_xenophobe
+					}
+				}
+				AND = {
+					opinion = {
+						who = event_target:president
+						value > 150
+					}
+					has_ethic = ethic_xenophobe
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_xenophile
+						has_ethic = ethic_fanatic_xenophile
+					}
+				}
+				has_ethic = ethic_xenophile
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				has_ethic = ethic_militarist
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_xenophile
+					}
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_spiritualist
+						has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				has_ethic = ethic_spiritualist
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				has_ethic = ethic_materialist
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			OR = {
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_authoritarian
+							has_ethic = ethic_fanatic_authoritarian
+						}
+					}
+					has_ethic = ethic_fanatic_authoritarian
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_egalitarian
+							has_ethic = ethic_fanatic_egalitarian
+						}
+					}
+					has_ethic = ethic_fanatic_egalitarian
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_xenophile
+							has_ethic = ethic_fanatic_xenophile
+						}
+					}
+					has_ethic = ethic_fanatic_xenophile
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_militarist
+							has_ethic = ethic_fanatic_militarist
+						}
+					}
+					has_ethic = ethic_fanatic_militarist
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_pacifist
+							has_ethic = ethic_fanatic_pacifist
+						}
+					}
+					has_ethic = ethic_fanatic_pacifist
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_spiritualist
+							has_ethic = ethic_fanatic_spiritualist
+						}
+					}
+					has_ethic = ethic_fanatic_spiritualist
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_materialist
+							has_ethic = ethic_fanatic_materialist
+						}
+					}
+					has_ethic = ethic_fanatic_materialist
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			opinion = {
+				who = event_target:president
+				value < -100
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			opinion = {
+				who = event_target:president
+				value < -200
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			opinion = {
+				who = event_target:president
+				value < -300
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {has_authority = auth_democratic}
+				OR = {
+					has_authority = auth_oligarchic
+					has_authority = auth_imperial
+					has_authority = auth_dictatorial
+				}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 15}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {has_civic = civic_criminal_heritage}
+				NOT = {has_civic = civic_criminal_heritage}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {has_civic = civic_machine_assimilator}
+				NOT = {has_authority = auth_machine_intelligence}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {has_authority = auth_corporate}
+				OR = {
+					has_authority = auth_oligarchic
+					has_authority = auth_imperial
+					has_authority = auth_dictatorial
+					}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+				has_authority = auth_democratic
+			}
+			}
+			subtract_variable = {which = rebel_count value = 15}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_spiritualist
+						has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				has_ethic = ethic_materialist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+					has_ethic = ethic_spiritualist
+					has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				has_ethic = ethic_fanatic_materialist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				has_ethic = ethic_spiritualist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				has_ethic = ethic_fanatic_spiritualist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+				has_ethic = ethic_militarist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+				has_ethic = ethic_fanatic_militarist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				has_ethic = ethic_pacifist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				has_ethic = ethic_fanatic_pacifist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				has_ethic = ethic_egalitarian
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				has_ethic = ethic_fanatic_egalitarian
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				has_ethic = ethic_authoritarian
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				has_ethic = ethic_fanatic_authoritarian
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_xenophobe
+						has_ethic = ethic_fanatic_xenophobe
+					}
+				}
+				OR = {
+					has_ethic = ethic_fanatic_xenophile
+					has_ethic = ethic_egalitarian
+					has_ethic = ethic_fanatic_egalitarian
+				}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_xenophile
+						has_ethic = ethic_fanatic_xenophile
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				OR = {
+					has_ethic = ethic_xenophobe
+					has_ethic = ethic_fanatic_xenophobe
+				}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				is_federation_leader = yes
+				NOT = {has_ethic = ethic_xenophobe}
+				NOT = {has_ethic = ethic_fanatic_xenophobe}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		
+	event_target:senate_rebels = {
+		prev = {
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_xenophobe
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_xenophobe }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_xenophobe}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_xenophobe
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_xenophobe }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_xenophobe}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_militarist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_militarist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_militarist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_militarist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_militarist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_militarist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_pacifist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_pacifist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_pacifist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_pacifist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_pacifist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_pacifist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_xenophile
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_xenophile }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_xenophile}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_xenophile
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_xenophile }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_xenophile}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_authoritarian
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_authoritarian }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_authoritarian}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_authoritarian
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_authoritarian }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_authoritarian}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_egalitarian
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_egalitarian }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_egalitarian}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_egalitarian
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_egalitarian }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_egalitarian}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_materialist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_materialist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_materialist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_materialist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_materialist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_materialist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_spiritualist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_spiritualist }}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_spiritualist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_spiritualist
+						event_target:senate_rebels = { NOT = { has_ethic = ethic_fanatic_spiritualist}}
+					}
+				}
+				event_target:senate_rebels = {country_add_ethic = ethic_fanatic_spiritualist}
+			}
+		}
+	}
+	random_system_within_border = {
+		limit = { 
+			any_system_planet = {is_colony = yes}
+		}
+		save_event_target_as = rebel_origin
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 81}
+				check_variable = {which = rebel_count value < 91}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.05
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 71}
+				check_variable = {which = rebel_count value < 81}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.10
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 61}
+				check_variable = {which = rebel_count value < 71}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.15
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 51}
+				check_variable = {which = rebel_count value < 61}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.20
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 41}
+				check_variable = {which = rebel_count value < 51}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.25
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 31}
+				check_variable = {which = rebel_count value < 41}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.35
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 21}
+				check_variable = {which = rebel_count value < 31}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.40
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value < 21}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.60
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	every_system_within_border = {
+		limit = {has_star_flag = rebel_system}
+		every_fleet_in_system = {
+			limit = { owner = { has_country_flag = to_be_unified } }
+			set_owner = event_target:senate_rebels
+		}
+		starbase = {
+			set_owner = event_target:senate_rebels
+		}
+	}
+	every_owned_planet = {
+		limit = { solar_system = {has_star_flag = rebel_system}}
+		set_owner = event_target:senate_rebels
+		set_controller = event_target:senate_rebels
+	}
+	every_pool_leader = {
+		set_owner = event_target:senate_rebels
+	}
+		event_target:senate_rebels = {
+			add_resource = { energy = 1000 }
+			add_resource = { minerals = 1000 }
+			add_resource = { food = 1000 }
+			add_resource = { consumer_goods = 1000 }
+			add_resource = { alloys = 1000 }
+		}
+			event_target:president = {
+				# checks if president is corporate, if so makes the other countries subsidiaries.
+				if = {
+					limit = { has_authority = auth_corporate }
+					prev = {
+						set_subject_of = {
+							who = event_target:president
+							subject_type = subsidiary
+						}
+					}
+				}
+				# checks if president is corporate, if not makes the other countries protectorates.
+				if = {
+					limit = { 
+						NOT = {has_authority = auth_corporate} 
+					}
+					prev = {
+						set_subject_of = {
+							who = event_target:president
+							subject_type = protectorate
+						}
+					}
+				}
+			}
+		}
+		# every_country ends here.
+		event_target:senate_rebels = {add_opinion_modifier = { who = event_target:president modifier = opinion_traitor }}
+		if = {
+			limit = { has_authority = auth_corporate }
+			declare_war = {
+				target = event_target:senate_rebels
+				attacker_war_goal = wg_megacorp_subjugate
+			}
+		}
+		if = {
+			limit = { NOT = {has_authority = auth_corporate} }
+			declare_war = {
+				target = event_target:senate_rebels
+				attacker_war_goal = wg_subjugation
+			}
+		}
+	}
+	after = {
+		every_country = {
+			limit = {has_country_flag = to_be_unified}
+			remove_country_flag = to_be_unified
+		}
+	}
+}

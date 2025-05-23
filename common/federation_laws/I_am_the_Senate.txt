@@ -1,0 +1,541 @@
+Not_yet = {
+	allow = { always = yes }
+	on_enact = {}
+	ai_weight = {
+		base = 51
+	}
+}
+
+I_am_the_Senate = {
+	required_centralization = {
+		base = 5
+	}
+	on_enact = {
+		# it is unclear why but using save_global_event_target_as does not work in this scope
+		save_event_target_as = the_federation
+		# this starts the event, limited to just the federation president
+		every_country = {
+			limit = { 
+				has_federation = yes
+				federation = { is_same_value = event_target:the_federation }
+				is_federation_leader = yes
+			}
+			country_event = {
+				id = I_am_the_Senate.1
+			}
+		}
+	}
+	
+	ai_weight = {
+		base = 46
+		
+		modifier = {
+			add = 5
+			opinion = {
+				who = From
+				value > 100
+			}
+		}
+		modifier = {
+			add = 5
+			opinion = {
+				who = From
+				value > 200
+			}
+		}
+		modifier = {
+			add = 10
+			opinion = {
+				who = From
+				value > 300
+			}
+		}
+		modifier = {
+			add = 15
+			AND = {
+				From = {has_authority = auth_democratic}
+				has_authority = auth_democratic
+			}
+		}
+		modifier = {
+			add = 20
+			OR = {
+				AND = {
+					From = {has_authority = auth_hive_mind}
+					has_authority = auth_hive_mind
+				}
+				AND = {
+					From = {has_authority = auth_machine_intelligence}
+					has_authority = auth_machine_intelligence
+				}
+			}
+		}
+		modifier = {
+			add = 10
+			AND = {
+				From = {has_authority = auth_corporate}
+				has_authority = auth_corporate
+			}
+		}
+		modifier = {
+			add = 5
+			OR = {
+				AND = {
+					From = {has_authority = auth_oligarchic}
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+				AND = {
+					From = {has_authority = auth_imperial}
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+				AND = {
+					From = {has_authority = auth_dictatorial}
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+			}
+		}
+		modifier = {
+			add = 5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				has_ethic = ethic_authoritarian
+			}
+		}
+		modifier = {
+			add = 5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				OR = {
+					has_ethic = ethic_egalitarian
+					has_ethic = ethic_fanatic_xenophile
+				}
+			}
+		}
+		modifier = {
+			add = 5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_xenophobe
+						has_ethic = ethic_fanatic_xenophobe
+					}
+				}
+				AND = {
+					opinion = {
+						who = From
+						value > 150
+					}
+					has_ethic = ethic_xenophobe
+				}
+			}
+		}
+		modifier = {
+			add = 5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_xenophile
+						has_ethic = ethic_fanatic_xenophile
+					}
+				}
+				has_ethic = ethic_xenophile
+			}
+		}
+		modifier = {
+			add = 5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				has_ethic = ethic_militarist
+			}
+		}
+		modifier = {
+			add = 5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_xenophile
+					}
+			}
+		}
+		modifier = {
+			add = 5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_spiritualist
+						has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				has_ethic = ethic_spiritualist
+			}
+		}
+		modifier = {
+			add = 5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				has_ethic = ethic_materialist
+			}
+		}
+		modifier = {
+			add = 10
+			OR = {
+				AND = {
+					From = {
+						OR = {
+							has_ethic = ethic_authoritarian
+							has_ethic = ethic_fanatic_authoritarian
+						}
+					}
+					has_ethic = ethic_fanatic_authoritarian
+				}
+				AND = {
+					From = {
+						OR = {
+							has_ethic = ethic_egalitarian
+							has_ethic = ethic_fanatic_egalitarian
+						}
+					}
+					has_ethic = ethic_fanatic_egalitarian
+				}
+				AND = {
+					From = {
+						OR = {
+							has_ethic = ethic_xenophile
+							has_ethic = ethic_fanatic_xenophile
+						}
+					}
+					has_ethic = ethic_fanatic_xenophile
+				}
+				AND = {
+					From = {
+						OR = {
+							has_ethic = ethic_militarist
+							has_ethic = ethic_fanatic_militarist
+						}
+					}
+					has_ethic = ethic_fanatic_militarist
+				}
+				AND = {
+					From = {
+						OR = {
+							has_ethic = ethic_pacifist
+							has_ethic = ethic_fanatic_pacifist
+						}
+					}
+					has_ethic = ethic_fanatic_pacifist
+				}
+				AND = {
+					From = {
+						OR = {
+							has_ethic = ethic_spiritualist
+							has_ethic = ethic_fanatic_spiritualist
+						}
+					}
+					has_ethic = ethic_fanatic_spiritualist
+				}
+				AND = {
+					From = {
+						OR = {
+							has_ethic = ethic_materialist
+							has_ethic = ethic_fanatic_materialist
+						}
+					}
+					has_ethic = ethic_fanatic_materialist
+				}
+			}
+		}
+		modifier = {
+			add = -10
+			opinion = {
+				who = From
+				value < -100
+			}
+		}
+		modifier = {
+			add = -10
+			opinion = {
+				who = From
+				value < -200
+			}
+		}
+		modifier = {
+			add = -10
+			opinion = {
+				who = From
+				value < -300
+			}
+		}
+		modifier = {
+			add = -15
+			AND = {
+				From = {has_authority = auth_democratic}
+				OR = {
+					has_authority = auth_oligarchic
+					has_authority = auth_imperial
+					has_authority = auth_dictatorial
+				}
+			}
+		}
+		modifier = {
+			add = -5
+			AND = {
+				From = {has_civic = civic_criminal_heritage}
+				NOT = {has_civic = civic_criminal_heritage}
+			}
+		}
+		modifier = {
+			add = -5
+			AND = {
+				From = {has_civic = civic_machine_assimilator}
+				NOT = {has_authority = auth_machine_intelligence}
+			}
+		}
+		modifier = {
+			add = -10
+			AND = {
+				From = {has_authority = auth_corporate}
+				OR = {
+					has_authority = auth_oligarchic
+					has_authority = auth_imperial
+					has_authority = auth_dictatorial
+					}
+			}
+		}
+		modifier = {
+			add = -15
+			AND = {
+				From = {
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+				has_authority = auth_democratic
+			}
+		}
+		modifier = {
+			add = -5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_spiritualist
+						has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				has_ethic = ethic_materialist
+			}
+		}
+		modifier = {
+			add = -10
+			AND = {
+				From = {
+					OR = {
+					has_ethic = ethic_spiritualist
+					has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				has_ethic = ethic_fanatic_materialist
+			}
+		}
+		modifier = {
+			add = -5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				has_ethic = ethic_spiritualist
+			}
+		}
+		modifier = {
+			add = -10
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				has_ethic = ethic_fanatic_spiritualist
+			}
+		}
+		modifier = {
+			add = -5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+				has_ethic = ethic_militarist
+			}
+		}
+		modifier = {
+			add = -10
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+				has_ethic = ethic_fanatic_militarist
+			}
+		}
+		modifier = {
+			add = -5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				has_ethic = ethic_pacifist
+			}
+		}
+		modifier = {
+			add = -10
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				has_ethic = ethic_fanatic_pacifist
+			}
+		}
+		modifier = {
+			add = -5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				has_ethic = ethic_egalitarian
+			}
+		}
+		modifier = {
+			add = -10
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				has_ethic = ethic_fanatic_egalitarian
+			}
+		}
+		modifier = {
+			add = -5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				has_ethic = ethic_authoritarian
+			}
+		}
+		modifier = {
+			add = -10
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				has_ethic = ethic_fanatic_authoritarian
+			}
+		}
+		modifier = {
+			add = -5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_xenophobe
+						has_ethic = ethic_fanatic_xenophobe
+					}
+				}
+				OR = {
+					has_ethic = ethic_fanatic_xenophile
+					has_ethic = ethic_egalitarian
+					has_ethic = ethic_fanatic_egalitarian
+				}
+			}
+		}
+		modifier = {
+			add = -5
+			AND = {
+				From = {
+					OR = {
+						has_ethic = ethic_xenophile
+						has_ethic = ethic_fanatic_xenophile
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				OR = {
+					has_ethic = ethic_xenophobe
+					has_ethic = ethic_fanatic_xenophobe
+				}
+			}
+		}
+		modifier = {
+			add = 60
+			AND = {
+				is_federation_leader = yes
+				NOT = {has_ethic = ethic_xenophobe}
+				NOT = {has_ethic = ethic_fanatic_xenophobe}
+			}
+		}
+	}
+}

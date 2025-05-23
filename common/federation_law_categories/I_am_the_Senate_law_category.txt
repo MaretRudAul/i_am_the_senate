@@ -1,0 +1,6 @@
+law_category_Unite_The_Federation = {
+	laws = {
+		Not_yet
+		I_am_the_Senate
+	}
+}

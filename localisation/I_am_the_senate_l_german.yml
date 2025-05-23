@@ -1,0 +1,17 @@
+﻿l_german:
+
+ I_am_the_Senate.1.name:0 "Der Senat wurde üergenommen!"
+ I_am_the_Senate.1.desc:0 "Durch Manipulation, Gewalt oder mit guten Absichten wurde die [From.GetName] Föderation von [event_target:president.GetName] übernommen. Dies ist ein bedeutender Moment in der Geschichte unserer Galaxie."
+ I_am_the_Senate.23.desc:0 "Durch Manipulation, Gewalt oder mit guten Absichten wurde die [From.From.GetName] Föderation von [event_target:president.GetName] übernommen. Dies ist ein bedeutender Moment in der Geschichte unserer Galaxie."
+ law_category_Unite_The_Federation:0 "Vereine die Föderation"
+ law_category_Unite_The_Federation_desc:0 "Der Senat oder Nichtsein."
+ I_am_the_Senate_desc:0 "ICH BIN DER SENAT!"
+ Not_yet_desc:0 "Um welchen Notstand handelt es sich?"
+ I_am_the_Senate:0 "Notstandsermächtigung"
+ Not_yet:0 "Welcher Notfall?"
+ surrender_Senate_desc:0 "Wir kniehen vor Ihnen nieder, oberster Führer [event_target:president.GetName]."
+ witness_to_surrender_desc:0 "Ich liebe Demokratie."
+ conquest_of_the_federation_unification_desc:0 "ICH BIN DER SENAT! (Vereinigung)"
+ conquest_of_the_federation_subjectization_desc:0 "ICH BIN DER SENAT! (Unterwerfung)"
+ senate_game_start_event.1.name:0 "ICH BIN DER SENAT! Nachrichtenlog"
+ senate_game_start_event.1.desc:0 " (This is the german version) Hello there! Many of you likely subscribed before many of the features of this mod have been added. As such this event is here to inform you. \n Relatively new features: \n\n -You can now choose between Unification and Vassalization. If you choose the latter, if you are a megacorp the other empires will become subsidiaries, and if you are not a megacorp they will become protectorates with the ability to become vassals. \n -Intelligent AI decisions for unification. I have taught the AI to determine whether their pops would be happy living in your empire by comparing their ethics and authorities to yours. Similarities make them more likely to vote yes for unification, and difference make them less likely. But don't worry that it will be difficult to get them to vote for you; just getting them to have a positive opinion of you will greatly increase your chances. The AI now also knows that it can propose unification if it is president, so watch out. \n\n When these features get a bit older, they will be removed from this list. If there are no new features for a while, this event will be removed from the game until new features are added."

@@ -1,0 +1,35 @@
+namespace = senate_game_start
+
+event = {
+	id = senate_game_start.10
+	hide_window = yes
+	is_triggered_only = yes
+	immediate = {
+		every_country = {
+			limit = { is_ai = no }
+			country_event = {id = senate_game_start.1}
+		}
+	}
+}
+
+country_event = {
+	id = senate_game_start.1
+	title = senate_game_start.1.name
+	desc = senate_game_start.1.desc
+	picture = GFX_evt_signing
+	is_triggered_only = yes
+	trigger = { always = yes }
+	immediate = {}
+	option = {
+		name = "You are strong and wise, and I am very proud of you."
+		allow = {always = yes}
+	}
+	option = {
+		name = "Twice the pride, double the fall."
+		allow = {always = yes}
+	}
+	option = {
+		name = "My allegiance is to the republic! To democracy!"
+		allow = {always = yes}
+	}
+}

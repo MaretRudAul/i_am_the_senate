@@ -1,0 +1,947 @@
+immediate = {
+	every_owned_pop_species = {
+		if = {
+			limit = {is_majority_species = yes}
+			save_event_target_as = rebel_species
+		}
+	}
+}
+	
+	# should go in the after part of event 1. 
+	
+	create_country = {
+		name_list = random
+		species = event_target:rebel_species
+		type = default
+		authority = auth_imperial
+		civics = { }
+		origin = "prosperous_unification"
+		ethos = {
+		}
+		ignore_initial_colony_error = yes
+	}
+	last_created_country = {
+		save_event_target_as = senate_rebels
+		copy_techs_from = event_target:president
+		set_country_flag = senate_rebels
+		set_name = random
+	}
+	
+	# this goes in the hidden effects of parts 2 and 3
+	
+	# determines the percent of planets that will become rebels. The lower the rebel_count the higher the rebels. Sounds counterintuitive.
+		set_variable = {which = rebel_count value = 41}
+		if = {
+			limit = {
+				opinion = {
+					who = event:target_president
+					value > 100
+				}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+				opinion = {
+					who = event:target_president
+					value > 200
+				}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+				opinion = {
+					who = event:target_president
+					value > 300
+				}
+			}
+			change_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+				AND = {
+					event:target_president = {has_authority = auth_democratic}
+					has_authority = auth_democratic
+				}
+			}
+			change_variable = {which = rebel_count value = 15}
+		}
+		if = {
+			limit = {
+			OR = {
+				AND = {
+					event_target:president = {has_authority = auth_hive_mind}
+					has_authority = auth_hive_mind
+				}
+				AND = {
+					event_target:president = {has_authority = auth_machine_intelligence}
+					has_authority = auth_machine_intelligence
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 50}
+		}
+		if = {
+			limit = {
+				AND = {
+					event_target:president = {has_authority = auth_corporate}
+					has_authority = auth_corporate
+				}
+			}
+			change_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			OR = {
+				AND = {
+					event_target:president = {has_authority = auth_oligarchic}
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+				AND = {
+					event_target:president = {has_authority = auth_imperial}
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+				AND = {
+					event_target:president = {has_authority = auth_dictatorial}
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				has_ethic = ethic_authoritarian
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				OR = {
+					has_ethic = ethic_egalitarian
+					has_ethic = ethic_fanatic_xenophile
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_xenophobe
+						has_ethic = ethic_fanatic_xenophobe
+					}
+				}
+				AND = {
+					opinion = {
+						who = event_target:president
+						value > 150
+					}
+					has_ethic = ethic_xenophobe
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_xenophile
+						has_ethic = ethic_fanatic_xenophile
+					}
+				}
+				has_ethic = ethic_xenophile
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				has_ethic = ethic_militarist
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_xenophile
+					}
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_spiritualist
+						has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				has_ethic = ethic_spiritualist
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				has_ethic = ethic_materialist
+			}
+			}
+			change_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			OR = {
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_authoritarian
+							has_ethic = ethic_fanatic_authoritarian
+						}
+					}
+					has_ethic = ethic_fanatic_authoritarian
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_egalitarian
+							has_ethic = ethic_fanatic_egalitarian
+						}
+					}
+					has_ethic = ethic_fanatic_egalitarian
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_xenophile
+							has_ethic = ethic_fanatic_xenophile
+						}
+					}
+					has_ethic = ethic_fanatic_xenophile
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_militarist
+							has_ethic = ethic_fanatic_militarist
+						}
+					}
+					has_ethic = ethic_fanatic_militarist
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_pacifist
+							has_ethic = ethic_fanatic_pacifist
+						}
+					}
+					has_ethic = ethic_fanatic_pacifist
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_spiritualist
+							has_ethic = ethic_fanatic_spiritualist
+						}
+					}
+					has_ethic = ethic_fanatic_spiritualist
+				}
+				AND = {
+					event_target:president = {
+						OR = {
+							has_ethic = ethic_materialist
+							has_ethic = ethic_fanatic_materialist
+						}
+					}
+					has_ethic = ethic_fanatic_materialist
+				}
+			}
+			}
+			change_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			opinion = {
+				who = event_target:president
+				value < -100
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			opinion = {
+				who = event_target:president
+				value < -200
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			opinion = {
+				who = event_target:president
+				value < -300
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {has_authority = auth_democratic}
+				OR = {
+					has_authority = auth_oligarchic
+					has_authority = auth_imperial
+					has_authority = auth_dictatorial
+				}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 15}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {has_civic = civic_criminal_heritage}
+				NOT = {has_civic = civic_criminal_heritage}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {has_civic = civic_machine_assimilator}
+				NOT = {has_authority = auth_machine_intelligence}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {has_authority = auth_corporate}
+				OR = {
+					has_authority = auth_oligarchic
+					has_authority = auth_imperial
+					has_authority = auth_dictatorial
+					}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_authority = auth_oligarchic
+						has_authority = auth_imperial
+						has_authority = auth_dictatorial
+					}
+				}
+				has_authority = auth_democratic
+			}
+			}
+			subtract_variable = {which = rebel_count value = 15}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_spiritualist
+						has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				has_ethic = ethic_materialist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+					has_ethic = ethic_spiritualist
+					has_ethic = ethic_fanatic_spiritualist
+					}
+				}
+				has_ethic = ethic_fanatic_materialist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				has_ethic = ethic_spiritualist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_materialist
+						has_ethic = ethic_fanatic_materialist
+					}
+				}
+				has_ethic = ethic_fanatic_spiritualist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+				has_ethic = ethic_militarist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_pacifist
+						has_ethic = ethic_fanatic_pacifist
+					}
+				}
+				has_ethic = ethic_fanatic_militarist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				has_ethic = ethic_pacifist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_militarist
+						has_ethic = ethic_fanatic_militarist
+					}
+				}
+				has_ethic = ethic_fanatic_pacifist
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				has_ethic = ethic_egalitarian
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_authoritarian
+						has_ethic = ethic_fanatic_authoritarian
+					}
+				}
+				has_ethic = ethic_fanatic_egalitarian
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				has_ethic = ethic_authoritarian
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				has_ethic = ethic_fanatic_authoritarian
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_xenophobe
+						has_ethic = ethic_fanatic_xenophobe
+					}
+				}
+				OR = {
+					has_ethic = ethic_fanatic_xenophile
+					has_ethic = ethic_egalitarian
+					has_ethic = ethic_fanatic_egalitarian
+				}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		if = {
+			limit = {
+			AND = {
+				event_target:president = {
+					OR = {
+						has_ethic = ethic_xenophile
+						has_ethic = ethic_fanatic_xenophile
+						has_ethic = ethic_egalitarian
+						has_ethic = ethic_fanatic_egalitarian
+					}
+				}
+				OR = {
+					has_ethic = ethic_xenophobe
+					has_ethic = ethic_fanatic_xenophobe
+				}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 10}
+		}
+		if = {
+			limit = {
+			AND = {
+				is_federation_leader = yes
+				NOT = {has_ethic = ethic_xenophobe}
+				NOT = {has_ethic = ethic_fanatic_xenophobe}
+			}
+			}
+			subtract_variable = {which = rebel_count value = 5}
+		}
+		
+	event_target:senate_rebels = {
+		prev = {
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_xenophobe
+						prev = { NOT = { has_ethic = ethic_xenophobe }}
+					}
+				}
+				prev = {country_add_ethic = ethic_xenophobe}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_xenophobe
+						prev = { NOT = { has_ethic = ethic_fanatic_xenophobe }}
+					}
+				}
+				prev = {country_add_ethic = ethic_fanatic_xenophobe}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_militarist
+						prev = { NOT = { has_ethic = ethic_militarist }}
+					}
+				}
+				prev = {country_add_ethic = ethic_militarist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_militarist
+						prev = { NOT = { has_ethic = ethic_fanatic_militarist }}
+					}
+				}
+				prev = {country_add_ethic = ethic_fanatic_militarist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_pacifist
+						prev = { NOT = { has_ethic = ethic_pacifist }}
+					}
+				}
+				prev = {country_add_ethic = ethic_pacifist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_pacifist
+						prev = { NOT = { has_ethic = ethic_fanatic_pacifist }}
+					}
+				}
+				prev = {country_add_ethic = ethic_fanatic_pacifist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_xenophile
+						prev = { NOT = { has_ethic = ethic_xenophile }}
+					}
+				}
+				prev = {country_add_ethic = ethic_xenophile}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_xenophile
+						prev = { NOT = { has_ethic = ethic_xenophile }}
+					}
+				}
+				prev = {country_add_ethic = ethic_fanatic_xenophile}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_authoritarian
+						prev = { NOT = { has_ethic = ethic_authoritarian }}
+					}
+				}
+				prev = {country_add_ethic = ethic_authoritarian}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_authoritarian
+						prev = { NOT = { has_ethic = ethic_fanatic_authoritarian }}
+					}
+				}
+				prev = {country_add_ethic = ethic_fanatic_authoritarian}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_egalitarian
+						prev = { NOT = { has_ethic = ethic_egalitarian }}
+					}
+				}
+				prev = {country_add_ethic = ethic_egalitarian}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_egalitarian
+						prev = { NOT = { has_ethic = ethic_fanatic_egalitarian }}
+					}
+				}
+				prev = {country_add_ethic = ethic_fanatic_egalitarian}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_materialist
+						prev = { NOT = { has_ethic = ethic_materialist }}
+					}
+				}
+				prev = {country_add_ethic = ethic_materialist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_materialist
+						prev = { NOT = { has_ethic = ethic_fanatic_materialist }}
+					}
+				}
+				prev = {country_add_ethic = ethic_fanatic_materialist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_spiritualist
+						prev = { NOT = { has_ethic = ethic_spiritualist }}
+					}
+				}
+				prev = {country_add_ethic = ethic_spiritualist}
+			}
+			if = {
+				limit = {
+					AND = {
+						has_ethic = ethic_fanatic_spiritualist
+						prev = { NOT = { has_ethic = ethic_fanatic_spiritualist}}
+					}
+				}
+				prev = {country_add_ethic = ethic_fanatic_spiritualist}
+			}
+		}
+	}
+	random_system_within_border = {
+		limit = { 
+			any_system_planet = {is_colony = yes}
+		}
+		save_event_target_as = rebel_origin
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 81}
+				check_variable = {which = rebel_count value < 91}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.05
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 71}
+				check_variable = {which = rebel_count value < 81}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.10
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 61}
+				check_variable = {which = rebel_count value < 71}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.15
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 51}
+				check_variable = {which = rebel_count value < 61}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.20
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 41}
+				check_variable = {which = rebel_count value < 51}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.25
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 31}
+				check_variable = {which = rebel_count value < 41}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.35
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value >= 21}
+				check_variable = {which = rebel_count value < 31}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.40
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	if = {
+		limit = { 
+			AND = {
+				check_variable = {which = rebel_count value < 21}
+			}
+		}
+		effect_on_blob = {
+			center = event_target:rebel_origin
+			owned_planets_percentage = 0.60
+			planet_limit = {}
+			effect = {
+				set_star_flag = rebel_system
+			}
+		}
+	}
+	every_system_within_border = {
+		limit = {has_star_flag = rebel_system}
+		every_fleet_in_system = {
+			set_owner = event_target:senate_rebels
+		}
+		starbase = {
+			set_owner = event_target:senate_rebels
+		}
+	}
+	every_owned_planet = {
+		limit = { system = {has_star_flag = rebel_system}}
+		set_owner = event_target:president
+		set_controller = event_target:president
+	}
+	every_pool_leader = {
+		set_owner = event_target:senate_rebels
+	}
+	
+	every_system_within_border = {
+		limit = {NOT = {has_star_flag = rebel_system}}
+		every_fleet_in_system = {
+			set_owner = event_target:president
+		}
+		starbase = {
+			set_owner = event_target:president
+		}
+	}
+	Every_owned_ship = {
+		set_owner = event_target:president
+	}
+	every_owned_planet = {
+		set_owner = event_target:president
+		set_controller = event_target:president
+	}
+	Every_owned_leader = {
+		set_owner = event_target:president
+	}
+	Every_owned_army = {
+		set_owner = event_target:president
+	}
+	event_target:president = {
+		steal_relic = {
+			target = prev
+			relic = all
+		}
+	}

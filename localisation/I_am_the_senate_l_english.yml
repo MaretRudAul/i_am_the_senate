@@ -1,0 +1,19 @@
+﻿l_english:
+
+ I_am_the_Senate.1.name:0 "The Senate has been taken over!"
+ I_am_the_Senate.1.desc:0 "By manipulation, force, or well meaning intent, the [From.GetName] has been taken over by [event_target:president.GetName]. This is a historic moment in the history of our galaxy."
+ I_am_the_Senate.23.desc:0 "By manipulation, force, or well meaning intent, the [From.From.GetName] has been taken over by [event_target:president.GetName]. This is a historic moment in the history of our galaxy."
+ law_category_Unite_The_Federation:0 "Unite the Federation"
+ law_category_Unite_The_Federation_desc:0 "The Senate or not, to be."
+ I_am_the_Senate_desc:0 "I am the Senate!"
+ Not_yet_desc:0 "What emergency is this?"
+ I_am_the_Senate:0 "Emergency powers"
+ Not_yet:0 "What emergency?"
+ surrender_Senate_desc:0 "We bow down before our supreme leader the [event_target:president.GetName]."
+ witness_to_surrender_desc:0 "I love democracy."
+ conquest_of_the_federation_unification_desc:0 "I am the Senate! (Unification)"
+ conquest_of_the_federation_subjectization_desc:0 "I am the Senate! (Create Subjects)"
+ senate_game_start.1.name:0 "I am the Senate! Update Log"
+ senate_game_start.1.desc:0 "Hello there! Many of you likely subscribed before a lot of the features of this mod were added. As such this event is here to inform you. \nNew features: \n\n- You can now choose between Unification and Vassalization. If you choose the latter and you are a megacorp then the other empires will become subsidiaries, and if you are not a megacorp they will become protectorates with the ability to become vassals. \n\n- Intelligent AI decisions for unification. I have taught the AI to determine whether their pops would be happy living in your empire by comparing their ethics and authorities to yours. The AI will almost always grant emergency powers, but there will be edge cases where the AI decides it cannot trust you with emergency powers. The AI now also knows that it can propose unification if it is president, so watch out. \n\n- A rebel empire now forms after unification. Using the previous feature, the more different an empire is from your empire the more rebels are created. \n\nWhen these features get a bit older, they will be removed from this list. If there are no new features for a while, this event will be removed from the game until new features are added."
+ 
+ opinion_traitor:0 "§RTraitor!§!"

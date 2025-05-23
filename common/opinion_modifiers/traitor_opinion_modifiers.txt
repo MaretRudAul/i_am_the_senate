@@ -1,0 +1,13 @@
+opinion_traitor = {
+	opinion = {
+		base = -1000
+	}
+	
+	accumulative = no
+	max = -200
+	
+	monthly = yes
+	decay = {
+		base = 0.5
+	}
+}
